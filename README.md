@@ -1,4 +1,5 @@
 # MySelf_blog
 Blog about myself
-Django, HTML, CSS
+Django, HTML, CSS, PostgreSQL
+
 
