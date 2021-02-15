@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.views.generic import ListView
 
 from blog.models import Post
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
@@ -41,10 +42,8 @@ def profile_settings(request):
     return render(request, 'users/profile_settings.html', context)
 
 
-def profile(request):
-    user = request.user
-    context = {
-        'posts': Post.objects.filter(author=user)
-    }
-
-    return render(request, 'users/profile.html', context)
+class ProfileListView(ListView):
+    model = Post
+    template_name = 'users/profile.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
