@@ -47,3 +47,7 @@ class ProfileListView(ListView):
     template_name = 'users/profile.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
+
+    def get_queryset(self):
+        context = super().get_queryset()
+        return context.filter(author=self.request.user)
