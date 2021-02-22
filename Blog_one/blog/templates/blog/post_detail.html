@@ -4,8 +4,17 @@
 <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
+            {% if user.is_authenticated and user.username == post.author.username %}
+                <a class="mr-2" href="{% url 'profile'%}">
+                     {{ post.author.profile.last_name }}
+                     {{ post.author.profile.first_name }}</a>
+            {% else %}
+                <a class="mr-2" href="{% url 'profile-public' post.author.username %}">
+                     {{ post.author.profile.last_name }}
+                     {{ post.author.profile.first_name }}</a>
+            {% endif %}
             <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
-            {% if object.author == user%}
+            {% if object.author == user %}
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
             <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
             {% endif %}
@@ -25,7 +34,8 @@
             <img class="rounded-circle account-img" src="{{ object.author.profile.image.url }}">
         </div>
         <span class="media-body">
-            <h2 class="account-heading">{{ object.author }}</h2>
+            <h2 class="account-heading">{{ object.author.profile.first_name }}
+                {{ object.author.profile.last_name }}</h2>
             <p class="text-secondary">{{ object.author }}</p>
         </span>
     </div>
